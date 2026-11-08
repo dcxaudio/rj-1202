@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>RJ-1202 Studio Mixer</title>
+  <meta name="description" content="RJ-1202: o mixer do DCX Studio, estilo mesa compacta dos anos 90. 5 canais com EQ de 3 bandas, low cut, 2 aux, retornos e Tape no master. Projeto open source da DCX Audio.">
+  <meta name="theme-color" content="#1c1c1c">
+  <link rel="stylesheet" href="vendor/dcx-core/css/base.css">
+  <link rel="stylesheet" href="vendor/dcx-core/css/solo.css">
+  <link rel="stylesheet" href="css/rj1202.css">
+</head>
+<body>
+  <div class="power" id="power">
+    <button class="power-btn" id="power-btn" type="button">
+      <span class="power-ring"></span>
+      <span class="power-label">LIGAR</span>
+    </button>
+    <p class="power-hint">RJ-1202 &middot; DCX Audio<br>Toque para ligar o som</p>
+  </div>
+
+  <main class="solo">
+    <div class="solo-top">
+      <h1 class="solo-title">RJ-1202 &middot; DCX Audio</h1>
+      <div id="learnbar"></div>
+    </div>
+
+    <div class="m12-test" id="m12-test" aria-label="Host de teste">
+      <b>Host de teste</b> (as outras máquinas ainda não estão aqui; cada fonte é um som de mentira):
+      <button type="button" id="t-echo" aria-pressed="false" title="Aux 1 vai para um eco de teste e volta pelo Return 1 (o papel do DCX 404)">Eco no Aux 1 &rarr; Return 1</button>
+      <button type="button" id="t-42" aria-pressed="false" title="Um som de teste entra direto no master, sem canal (o papel do RJ-42)">RJ-42 direto no master</button>
+      <button type="button" id="t-mic" aria-pressed="false" title="Liga o microfone na fonte Line (pede permissão ao navegador)">Line = microfone</button>
+    </div>
+
+    <div class="m12-scroll" id="m12-mount"></div>
+
+    <p class="solo-help">Cada canal escolhe a sua fonte (botão no alto; clique passa para a próxima, Shift+clique volta). Solo (PFL) manda o canal para os fones e para o medidor: nesta página, enquanto houver um solo ligado, o alto-falante toca os fones no lugar do Main. Com o <b>Learn</b> ligado, toque num controle e mexa no controlador; Enter salva, Delete apaga. Os knobs andam com o arraste vertical, a roda do mouse e as setas; duplo clique volta ao valor de partida. Clique e Shift+clique na Fonte do canal; um CC ou nota aprendido na Fonte passa de uma fonte a outra.</p>
+    <p class="credit">
+      RJ-1202 <span id="version">v0.1</span> &middot; open source (GPL-3.0) &middot; mixer da DCX Audio &middot;
+      <a href="docs/manual.md" target="_blank" rel="noopener">manual</a>
+    </p>
+  </main>
+
+  <!-- dcx-core (cópia de vendor/dcx-core, v1.1.0; vira submódulo quando o repositório existir) -->
+  <script src="vendor/dcx-core/js/dsp.js"></script>
+  <script src="vendor/dcx-core/js/decode.js"></script>
+  <script src="vendor/dcx-core/js/store.js"></script>
+  <script src="vendor/dcx-core/js/output.js"></script>
+  <script src="vendor/dcx-core/js/midi.js"></script>
+  <script src="vendor/dcx-core/js/midimap.js"></script>
+  <script src="vendor/dcx-core/js/host.js"></script>
+  <script src="vendor/dcx-core/js/learnbar.js"></script>
+  <script src="vendor/dcx-core/js/tape.js"></script>
+  <!-- o mixer (mixer.js e worklet.js também carregam no AudioWorklet) -->
+  <script src="js/mixer.js"></script>
+  <script src="js/panel.js"></script>
+  <script src="js/rj1202.js"></script>
+  <script src="js/testhost.js"></script>
+  <script src="js/solo.js"></script>
+</body>
+</html>

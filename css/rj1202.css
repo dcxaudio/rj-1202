@@ -1,0 +1,156 @@
+/* RJ-1202 - o painel
+ *
+ * Carregar depois de vendor/dcx-core/css/base.css e solo.css.
+ * O desenho é o do mockup aprovado (dcx-design/rj-1202/mockup.html, aprovado por Igor em 08/11/2026),
+ * copiado igual: primeiro os componentes emprestados do rj950.css, rj42.css e rj2000.css (marca, teclas,
+ * grupos, jacks, fader; com :where(.m12) na frente, para valerem só dentro do painel e não mudarem as outras
+ * máquinas quando o painel mora no DCX Studio), depois o que é só do RJ-1202 (prefixo m12-).
+ */
+/* rj950.css */
+:where(.m12) .r9-cap { font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: var(--rack-ink); text-align: center; line-height: 1.15; }
+:where(.m12) .r9-maker { font-weight: 700; font-size: 28px; letter-spacing: .02em; color: var(--rack-ink); line-height: 1; transform: scaleY(1.1); transform-origin: left bottom; }
+:where(.m12) .r9-sub { font-size: 9px; letter-spacing: .28em; text-transform: uppercase; color: var(--rack-ink); }
+:where(.m12) .r9-model { font-weight: 700; font-size: 30px; line-height: 1; letter-spacing: .06em; color: transparent; -webkit-text-stroke: 1.2px var(--rack-ink); }
+:where(.m12) .r9-led { width: 7px; height: 7px; }
+:where(.m12) .r9-btn { width: 36px; height: 24px; padding: 0; border: 0; border-radius: 2px; background: linear-gradient(#dfe1dd, var(--rack-btn)); box-shadow: 0 2px 0 var(--rack-btn-edge), 0 4px 6px rgba(0,0,0,.5); touch-action: manipulation; transition: transform .04s, box-shadow .04s; }
+:where(.m12) .r9-btn.down { transform: translateY(2px); box-shadow: 0 0 0 var(--rack-btn-edge), 0 1px 3px rgba(0,0,0,.5); }
+:where(.m12) .r9-control { background: radial-gradient(circle at 38% 30%, #d0d2d4, #8e9194 55%, #5b5e61); box-shadow: 0 0 0 3px #0b0b0b, 0 8px 14px rgba(0,0,0,.6); }
+:where(.m12) .r9-control i { background: #1b1c1d; }
+:where(.m12) .r9-jack { display: block; width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle, #050505 30%, #c0c2c4 34%, #7f8285 58%, #2b2c2e 63%); box-shadow: 0 0 0 2px #0d0d0d; }
+/* rj42.css */
+:where(.m12) .r42-dim { color: #8e9093; }
+:where(.m12) .r42-win { display: flex; gap: 3px; align-items: flex-end; padding: 8px 10px; border-radius: 3px; background: #0a0505; box-shadow: inset 0 2px 6px #000, 0 1px 0 #34363a; }
+:where(.m12) .r42-win svg { width: 22px; height: 38px; display: block; }
+:where(.m12) .r42-seg { fill: rgba(255, 59, 38, .07); }
+:where(.m12) .r42-seg.on { fill: #ff3b26; filter: drop-shadow(0 0 3px rgba(255, 59, 38, .6)); }
+:where(.m12) .r42-lr { display: flex; align-items: center; gap: 7px; padding: 1px 0; border: 0; background: none; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: var(--rack-ink); text-align: left; }
+:where(.m12) .r42-group { position: relative; border: 1px solid #4c4f52; border-radius: 3px; padding: 14px 10px 10px; display: flex; gap: 12px; align-items: flex-end; }
+:where(.m12) .r42-gt { position: absolute; top: -6px; left: 10px; padding: 0 6px; background: var(--rack-face); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: #8e9093; }
+:where(.m12) .r42-bk { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+:where(.m12) .r42-t { min-height: 20px; display: flex; align-items: flex-end; justify-content: center; gap: 5px; text-align: center; font-size: 9px; line-height: 1.1; text-transform: uppercase; letter-spacing: .05em; color: var(--rack-ink); }
+/* rj2000.css: o fader */
+:where(.m12) .fader { position: relative; width: 44px; height: 220px; touch-action: none; cursor: ns-resize; }
+:where(.m12) .fader::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; margin-left: -2px; background: #050505; border-radius: 2px; }
+:where(.m12) .fader .cap-f { position: absolute; left: 3px; right: 3px; height: 22px; bottom: calc(var(--v) * (100% - 22px)); background: linear-gradient(#2a2a2a, #0a0a0a 60%); border-radius: 2px; box-shadow: 0 2px 0 #000, 0 4px 6px rgba(0,0,0,.6); }
+:where(.m12) .fader .cap-f::after { content: ""; position: absolute; left: 2px; right: 2px; bottom: 3px; height: 3px; background: #e8e8e2; border-radius: 1px; }
+
+/* ===================================================== só o que é do RJ-1202 (prefixo m12-) */
+/* 960 x ~720 px; --m12-scale muda o tamanho (zoom) */
+
+/* gabinete deitado: a face e a sombra do rack */
+.m12 { zoom: var(--m12-scale, 1); width: 960px; flex: none; position: relative; color: var(--rack-ink);
+  padding: 20px 24px 22px; border-radius: 14px; background: var(--rack-face);
+  box-shadow: 0 1px 0 #34363a inset, 0 -1px 0 #0b0b0b inset, 0 0 0 1px #0d0d0d, 0 20px 44px rgba(0,0,0,.45); }
+.m12-hole { position: absolute; width: 15px; height: 9px; border-radius: 5px; background: #060606; box-shadow: inset 0 1px 2px #000, 0 1px 0 #34363a; }
+.m12 .r9-cap { font-size: 8.5px; }
+.m12 .knob i { transform: rotate(var(--a, 0deg)); }
+
+.m12-top { display: flex; align-items: flex-end; gap: 18px; padding: 0 4px; }
+.m12-top .r9-brand { display: flex; flex-direction: column; gap: 2px; }
+.m12-sp { flex: 1; }
+.m12-pwr { margin-bottom: 4px; }
+
+.m12-main { display: flex; align-items: stretch; gap: 12px; margin-top: 16px; }
+
+/* ---------- canal ---------- */
+.m12-chs { display: flex; padding: 12px 0 10px; border-radius: 3px; background: var(--rack-block); box-shadow: inset 0 0 0 1px #2c2d2f; }
+.m12-ch { width: 92px; display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 0 6px; }
+.m12-ch + .m12-ch { border-left: 1px solid #2c2d2f; }
+.m12-num { font-size: 9px; letter-spacing: .1em; color: #8e9093; }
+/* seletor de fonte: botão que mostra a fonte atual (clique = próxima, Shift+clique = anterior) */
+.m12-src { width: 100%; display: flex; align-items: center; gap: 5px; padding: 4px 5px; border: 0; border-radius: 2px; background: #0b0b0c;
+  box-shadow: inset 0 1px 3px #000, 0 1px 0 #34363a; color: var(--rack-ink); font-size: 9.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; touch-action: manipulation; }
+.m12-src span { flex: 1; text-align: left; white-space: nowrap; }
+.m12-src b { font-size: 7px; color: #8e9093; font-weight: 400; }
+.m12-srcwrap { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+:where(.m12) .knob.locked { opacity: .35; cursor: not-allowed; }
+/* knob pequeno, com marca de detente (o "U" ou o centro) */
+.m12-k { width: 30px; height: 30px; box-shadow: 0 0 0 2px #050505, 0 4px 7px rgba(0,0,0,.6); }
+.m12-k i { top: 3px; height: 9px; width: 2px; margin-left: -1px; transform-origin: 50% 12px; }
+.m12-kw { position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.m12-kw.det::before { content: ""; position: absolute; top: -5px; left: 50%; width: 1px; height: 3px; margin-left: -.5px; background: #8c8c86; }
+.m12-kw .r9-cap small { display: block; font-size: 7.5px; color: #8e9093; letter-spacing: .04em; }
+.m12-pair { display: flex; gap: 10px; }
+/* seção do canal: título fino com linha */
+.m12-st { width: 100%; display: flex; align-items: center; gap: 4px; font-size: 7.5px; letter-spacing: .14em; text-transform: uppercase; color: #8e9093; }
+.m12-st::before, .m12-st::after { content: ""; flex: 1; height: 1px; background: #3a3c3f; }
+.m12-eq { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+.m12-lc { display: flex; align-items: center; gap: 6px; }
+.m12-lc .r9-btn { width: 30px; height: 18px; }
+.m12 .r9-btn.sm { width: 32px; height: 20px; }
+.m12-ms { display: flex; gap: 8px; }
+.m12-ms .r42-bk { gap: 5px; }
+.m12-ms .r42-t { min-height: 0; }
+.m12 .r9-btn.red { background: linear-gradient(#e2463f, var(--key-red)); box-shadow: 0 2px 0 var(--key-red-edge), 0 4px 6px rgba(0,0,0,.5); }
+.m12 .r9-btn.red.down { box-shadow: 0 0 0 var(--key-red-edge), 0 1px 3px rgba(0,0,0,.5); }
+
+/* fader de curso curto, com escala e "U" */
+.m12-fz { margin-top: auto; display: flex; align-items: stretch; gap: 6px; }
+.m12-fleds { display: flex; flex-direction: column; justify-content: space-between; padding: 2px 0 4px; }
+.m12-fleds .r42-lr { flex-direction: column; gap: 3px; font-size: 7.5px; }
+.m12-f { width: 30px; height: 118px; }
+.m12-f .cap-f { left: 2px; right: 2px; height: 20px; }
+.m12-scale { position: relative; width: 20px; white-space: nowrap; font-size: 7px; color: #8e9093; }
+.m12-scale span { position: absolute; right: 0; transform: translateY(50%); line-height: 1; }
+.m12-scale span::after { content: ""; display: inline-block; width: 3px; height: 1px; margin-left: 2px; vertical-align: middle; background: #8c8c86; }
+.m12-scale span.u { color: var(--rack-ink); font-weight: 700; }
+/* faixa do nome (fita de rotular) */
+.m12-name { width: 100%; padding: 4px 2px 3px; border-radius: 2px; background: var(--strip); color: var(--strip-ink);
+  font-size: 10px; font-weight: 700; letter-spacing: .06em; text-align: center; text-transform: uppercase; box-shadow: 0 1px 0 #0b0b0b; }
+
+/* ---------- retornos ---------- */
+.m12-ret { width: 128px; flex-direction: column; align-items: center; justify-content: flex-start; gap: 12px; padding: 16px 8px 10px; }
+.m12-ret .m12-k { width: 34px; height: 34px; }
+.m12-ret .m12-k i { top: 3px; height: 10px; transform-origin: 50% 14px; }
+.m12-path { width: 100%; border-collapse: collapse; font-size: 8px; color: var(--rack-ink); line-height: 1.25; }
+.m12-path td { border: 1px solid #4c4f52; padding: 2px 4px; text-align: center; text-transform: uppercase; letter-spacing: .04em; }
+.m12-path td.ar { border: 0; color: #8e9093; padding: 0; font-size: 9px; }
+/* chave deslizante (a do RJ-45) */
+:where(.m12) .sw { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 0; border: 0; background: none; color: var(--rack-ink); touch-action: manipulation; }
+:where(.m12) .sw .slot { position: relative; width: 54px; height: 24px; border-radius: 3px; background: #0b0b0c; box-shadow: inset 0 1px 3px #000, 0 1px 0 #34363a; }
+:where(.m12) .sw .thumb { position: absolute; top: 3px; width: 20px; height: 18px; border-radius: 2px; background: linear-gradient(#dfe1dd, var(--rack-btn)); box-shadow: 0 2px 0 var(--rack-btn-edge), 0 3px 4px rgba(0,0,0,.5); transition: left .06s; }
+:where(.m12) .sw .pos { display: flex; justify-content: space-between; gap: 6px; width: 100%; font-size: 8.5px; text-transform: uppercase; letter-spacing: .06em; color: #8e9093; }
+:where(.m12) .sw .pos span.sel { color: var(--rack-ink); }
+.m12-jacks { margin-top: auto; display: flex; gap: 12px; }
+.m12-jacks .kc { gap: 5px; }
+.m12 .r9-jack { width: 22px; height: 22px; }
+
+/* ---------- master ---------- */
+.m12-mst { flex: 1; flex-direction: column; align-items: stretch; gap: 12px; padding: 16px 12px 10px; }
+.m12-mst-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.m12-read { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.m12-read .r42-win { padding: 6px 8px; }
+.m12-read .r42-win svg { width: 16px; height: 27px; }
+.m12-mid { display: flex; gap: 14px; align-items: flex-start; }
+/* medidores: duas colunas de 12 LEDs, escala no meio */
+.m12-meter { display: grid; grid-template-columns: 10px auto 10px; gap: 0 6px; padding: 8px 8px 6px; border-radius: 3px; background: var(--rack-block); box-shadow: inset 0 0 0 1px #2c2d2f; }
+.m12-meter .col { display: flex; flex-direction: column; gap: 5px; align-items: center; }
+.m12-meter .col .led { width: 8px; height: 6px; border-radius: 1px; box-shadow: 0 0 0 1px #0c0c0c; }
+.m12-meter .col .led.on { box-shadow: 0 0 0 1px #0c0c0c, 0 0 6px 1px rgba(255, 59, 38, .5); }
+.m12-meter .sc { display: flex; flex-direction: column; gap: 5px; font-size: 7px; line-height: 6px; color: #8e9093; text-align: center; }
+.m12-meter .sc span:first-child { color: var(--rack-ink); }
+.m12-meter .lr { grid-column: 1 / 4; display: flex; justify-content: space-between; margin-top: 5px; font-size: 8px; color: #8e9093; }
+.m12-knobs2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 12px; justify-items: center; flex: 1; }
+.m12-silver { width: 40px; height: 40px; }
+.m12-silver i { top: 4px; height: 11px; width: 3px; margin-left: -1.5px; transform-origin: 50% 16px; }
+.m12-tape { position: relative; }
+.m12-tape .tl { display: flex; align-items: center; gap: 5px; }
+.m12-mst-bot { margin-top: auto; display: flex; align-items: flex-end; gap: 14px; }
+.m12-mst-bot .m12-fz { margin-top: 0; }
+.m12-mf .m12-f { width: 34px; }
+.m12-mfcol { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+.m12-mfcol .m12-name { width: 84px; background: #e3e1d9; }
+.m12-learn .r9-btn { width: 36px; height: 22px; }
+.m12-learn .led.on { background: radial-gradient(circle at 35% 35%, #d6e6ff, var(--rule) 55%); box-shadow: 0 0 0 2px #0c0c0c, 0 0 10px 2px rgba(75, 138, 208, .6); }
+.m12-btns { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; padding-bottom: 6px; }
+
+/* ---------- página solo ---------- */
+.m12-scroll { width: 100%; overflow-x: auto; display: flex; justify-content: center; padding: 6px 0 30px; }
+.m12-test { margin: 0 0 14px; font-size: 12.5px; color: var(--page-ink); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.m12-test button { border: 1px solid #4c4f52; border-radius: 3px; background: #1c1d1e; color: var(--ink); padding: 4px 9px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.m12-test button.on { border-color: var(--rule); box-shadow: 0 0 10px 1px rgba(75, 138, 208, .6); }
+.m12-test b { color: var(--ink); font-weight: 600; }
+/* tecla travada (Low Cut, Mute, Solo): o estado fica em .on; .down é só o toque (MIDI Learn) */
+.m12 .r9-btn.on { transform: translateY(2px); box-shadow: 0 0 0 var(--rack-btn-edge), 0 1px 3px rgba(0,0,0,.5); }
+.m12 .r9-btn.red.on { box-shadow: 0 0 0 var(--key-red-edge), 0 1px 3px rgba(0,0,0,.5); }
+.m12-test button[aria-pressed="true"] { border-color: var(--rule); box-shadow: 0 0 10px 1px rgba(75, 138, 208, .6); }
