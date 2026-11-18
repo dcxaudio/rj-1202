@@ -3,6 +3,7 @@
 ## Auditoria de 18/11/2026 (rascunho local)
 
 - **Tela estreita (P0-09):** a página solo não corta mais os canais da esquerda quando a mesa é mais larga que a tela; `.m12-scroll` sem `justify-content: center`, a mesa centraliza com `margin: 0 auto` (em tela larga fica igual). `css/rj1202.css?v=2`.
+- **Áudio que não liga (P0-08):** o boot do mixer tem try/catch e confere `ctx.audioWorklet`; se o worklet não carrega, o aparelho desmonta o que já montou (a nova tentativa não duplica nós nem rotas), desliga (`booted`, `on`, classe "on" e, na página solo, `host.on`), mostra "Err" e o motivo no visor e a tela LIGAR volta com o motivo para tentar de novo. O erro continua chegando a quem chamou (Studio). `js/rj1202.js?v=2`, `js/solo.js?v=2`.
 
 ## v0.2 (rascunho local): etapa 2, o mixer no DCX Studio
 

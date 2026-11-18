@@ -19,8 +19,17 @@
     const test = new RJ.TestHost(host.view("rj1202"), dev);
 
     // tela de ligar: o navegador só libera o som depois de um toque
-    const power = document.getElementById("power");
-    const on = () => { host.power(); power.classList.add("off"); dev.booted.then(() => test.start()).catch(e => console.error(e)); };
+    const power = document.getElementById("power"), hint = power.querySelector(".power-hint"), hint0 = hint.innerHTML;
+    const on = () => {
+      host.power(); power.classList.add("off"); hint.innerHTML = hint0;
+      Promise.resolve(dev.booted).then(() => test.start()).catch(e => {
+        // o áudio não ligou: desliga a régua (só tem o RJ-1202 aqui) e volta a tela LIGAR com o motivo, para tentar de novo
+        console.error(e);
+        host.on = false;
+        power.classList.remove("off");
+        hint.textContent = dev.bootError || "Sem áudio. Toque em LIGAR de novo";
+      });
+    };
     document.getElementById("power-btn").addEventListener("click", on);
     window.addEventListener("keydown", e => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;

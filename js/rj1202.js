@@ -21,6 +21,8 @@
   const STATE_KEY = "state";
   const SILENT = /[?&]silent\b/.test(location.search);   // gancho de teste: nada sai pelo alto-falante
   const LOCK_TIP = "Travado em zero: o DCX 404 é a fonte deste canal";
+  // motivo curto para o visor quando o áudio não liga
+  const M_BOOT_ERR = e => "Sem áudio: " + ((e && e.message) || "o mixer não carregou") + ". Toque em LIGAR de novo";
   const FALL_DB_S = 40;            // queda dos medidores, dB por segundo
 
   RJ.RJ1202 = class {
@@ -336,7 +338,35 @@
     async bootNow() {
       this.on = true;
       this.root.classList.add("on");
+      try { await this.bootAudio(); }
+      catch (e) {
+        // sem áudio: desfaz o que montou (a nova tentativa não duplica nós), desliga e mostra o motivo no visor
+        console.error("RJ-1202 não ligou o áudio", e);
+        this.teardown();
+        this.booted = null; this.on = false; this.ready = false;
+        this.root.classList.remove("on");
+        this.bootError = M_BOOT_ERR(e);
+        this.show("Err", this.bootError);
+        throw e;
+      }
+      if (this.bootError) { this.bootError = null; this.show("U", "Main · dB"); }
+    }
+
+    /** Desfaz os nós de áudio de um boot que falhou no meio. */
+    teardown() {
+      this.unroute.forEach(u => { try { u && u(); } catch (_) {} });
+      this.unroute = [];
+      ["chIn", "ret1In", "ret2In", "directIn", "aux1", "aux2", "main", "phones", "mainGate", "phGate", "nodeA", "nodeB"].forEach(k => {
+        const v = this[k];
+        (Array.isArray(v) ? v : [v]).forEach(n => { try { n && n.disconnect(); } catch (_) {} });
+        this[k] = null;
+      });
+      if (this.tape) { try { this.tape.input.disconnect(); this.tape.output.disconnect(); } catch (_) {} this.tape = null; }
+    }
+
+    async bootAudio() {
       const ctx = this.host.engine.ensure();
+      if (!ctx.audioWorklet || typeof AudioWorkletNode === "undefined") throw new Error("este navegador não tem AudioWorklet (abra por https ou localhost)");
       await this.loaded;
       const url = f => new URL((this.opts.base || "") + f, document.baseURI).href;
       await ctx.audioWorklet.addModule(url("js/mixer.js"));
