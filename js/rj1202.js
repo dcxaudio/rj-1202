@@ -21,6 +21,7 @@
   const STATE_KEY = "state";
   const SILENT = /[?&]silent\b/.test(location.search);   // gancho de teste: nada sai pelo alto-falante
   const LOCK_TIP = "Travado em zero: o DCX 404 é a fonte deste canal";
+  const SAVE_TIP = "Não foi possível guardar no navegador: o ajuste some ao reabrir";
   // motivo curto para o visor quando o áudio não liga
   const M_BOOT_ERR = e => "Sem áudio: " + ((e && e.message) || "o mixer não carregou") + ". Toque em LIGAR de novo";
   const FALL_DB_S = 40;            // queda dos medidores, dB por segundo
@@ -566,7 +567,18 @@
     dirty() { clearTimeout(this.dirtyT); this.dirtyT = setTimeout(() => this.saveNow(), 400); }
     saveNow() {
       clearTimeout(this.dirtyT); this.dirtyT = null;
-      try { this.host.store.put(STATE_KEY, JSON.stringify(this.st)); } catch (e) { console.warn(e); }
+      let p;
+      try { p = this.host.store.put(STATE_KEY, JSON.stringify(this.st)); } catch (e) { console.warn(e); p = false; }
+      // store.put devolve false quando não grava; um core mais novo pode rejeitar: os dois contam como falha
+      Promise.resolve(p).then(ok => this.saved(ok !== false), e => { console.warn(e); this.saved(false); });
+    }
+
+    /** Avisa uma vez no visor quando o estado não foi guardado; volta a avisar só depois de uma gravação boa. */
+    saved(ok) {
+      if (ok) { this.saveWarned = false; return; }
+      if (this.saveWarned) return;
+      this.saveWarned = true;
+      if (!this.bootError && this.segCap) this.show("Err", SAVE_TIP);
     }
   };
 })();
