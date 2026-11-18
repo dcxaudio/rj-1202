@@ -1,5 +1,9 @@
 # Changelog
 
+## Auditoria de 18/11/2026 (rascunho local)
+
+- **Tela estreita (P0-09):** a página solo não corta mais os canais da esquerda quando a mesa é mais larga que a tela; `.m12-scroll` sem `justify-content: center`, a mesa centraliza com `margin: 0 auto` (em tela larga fica igual). `css/rj1202.css?v=2`.
+
 ## v0.2 (rascunho local): etapa 2, o mixer no DCX Studio
 
 - **No DCX Studio** (`dcx-studio/js/rj1202-studio.js`): o RJ-1202 vira uma máquina do rack, numa faixa nova logo acima da barra de baixo. Cada canal tem a fonte de verdade: RJ-2000 inteiro, banco A a D (saídas `rj2000-A`... do RJ-2000), RJ-950, DCX 404 e Line (microfone). Fonte roteada para um canal sai do caminho direto (nada toca em dobro) e trocar a fonte desfaz a rota antiga. RJ-42 sem canal, entra direto no master do mixer.

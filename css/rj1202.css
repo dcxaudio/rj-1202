@@ -145,7 +145,9 @@
 .m12-btns { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; padding-bottom: 6px; }
 
 /* ---------- página solo ---------- */
-.m12-scroll { width: 100%; overflow-x: auto; display: flex; justify-content: center; padding: 6px 0 30px; }
+/* sem justify-content: center, que corta a esquerda quando a mesa é mais larga que a tela; margin auto centraliza só quando cabe */
+.m12-scroll { width: 100%; overflow-x: auto; display: flex; padding: 6px 0 30px; }
+.m12-scroll > .m12 { margin: 0 auto; }
 .m12-test { margin: 0 0 14px; font-size: 12.5px; color: var(--page-ink); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 .m12-test button { border: 1px solid #4c4f52; border-radius: 3px; background: #1c1d1e; color: var(--ink); padding: 4px 9px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
 .m12-test button.on { border-color: var(--rule); box-shadow: 0 0 10px 1px rgba(75, 138, 208, .6); }
